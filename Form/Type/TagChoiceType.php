@@ -2,22 +2,15 @@
 
 namespace Toro\Bundle\TaggingBundle\Form\Type;
 
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\ResourceChoiceType;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Toro\Bundle\TaggingBundle\Provider\TagProvider;
-use Toro\Bundle\TaggingBundle\ToroTaggingBundle;
 
 class TagChoiceType extends ResourceChoiceType
 {
-    /**
-     * @var string
-     */
-    private $name = ToroTaggingBundle::APPLICATION_NAME;
-
     /**
      * @var string
      */

@@ -3,6 +3,7 @@
 namespace Toro\Bundle\TaggingBundle\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Toro\Bundle\TaggingBundle\ToroTaggingBundle;
 
@@ -36,7 +37,7 @@ class TagType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', [
+            ->add('name', TextType::class, [
                 'label' => sprintf('%s.%s.form.tag.name', $this->name, $this->subject),
             ])
         ;
@@ -45,7 +46,7 @@ class TagType extends AbstractResourceType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return sprintf('%s_%s_tag', $this->name, $this->subject);
     }
