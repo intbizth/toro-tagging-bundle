@@ -36,9 +36,6 @@ class ToroTaggingExtension extends AbstractResourceExtension
                 $alias = $appName.'.'.$subjectName.'_'.$resourceName;
                 $metadata = Metadata::fromAliasAndConfiguration($alias, array_merge($resourceConfig, array('driver' => $config['driver'])));
 
-                $formDefinition = $container->getDefinition($metadata->getServiceId('form.type'));
-                $formDefinition->addArgument($subjectName);
-
                 $provider = new Definition($metadata->getClass('provider'));
                 $provider->setArguments(array(
                     new Reference($metadata->getServiceId('factory')),
@@ -47,10 +44,6 @@ class ToroTaggingExtension extends AbstractResourceExtension
                 ));
 
                 $container->setDefinition(sprintf('%s.provider.%s_%s', $appName, $subjectName, $resourceName), $provider);
-
-                $formDefinition = $container->getDefinition($metadata->getServiceId('form.type').'_choice');
-                $formDefinition->addArgument($subjectName);
-                $formDefinition->addArgument(new Reference($metadata->getServiceId('provider')));
             }
         }
     }

@@ -2,31 +2,68 @@
 
 namespace Toro\Bundle\TaggingBundle\Form\Type;
 
-use Sylius\Bundle\ResourceBundle\Form\Type\ResourceChoiceType;
-use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Toro\Bundle\TaggingBundle\Provider\TagProvider;
 
-class TagChoiceType extends ResourceChoiceType
+abstract class TagChoiceType extends AbstractType
 {
     /**
-     * @var string
+     * @var RepositoryInterface
      */
-    private $subject;
+    protected $repository;
 
     /**
      * @var TagProvider
      */
-    private $provider;
+    protected $provider;
 
-    public function __construct(MetadataInterface $metadata, $subject, TagProvider $provider)
+    /**
+     * @param RepositoryInterface $repository
+     */
+    public function __construct(RepositoryInterface $repository, TagProvider $provider)
     {
-        parent::__construct($metadata);
-
-        $this->subject = $subject;
+        $this->repository = $repository;
         $this->provider = $provider;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'choices' => function (Options $options) {
+                return $this->repository->findAll();
+            },
+            'choice_value' => 'id',
+            'choice_label' => 'name',
+            'choice_translation_domain' => false,
+            'label' => 'Tags',
+            'placeholder' => 'Select Tags',
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return ChoiceType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'toro_tag_choice';
     }
 
     /**

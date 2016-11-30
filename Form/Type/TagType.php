@@ -5,32 +5,9 @@ namespace Toro\Bundle\TaggingBundle\Form\Type;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Toro\Bundle\TaggingBundle\ToroTaggingBundle;
 
-class TagType extends AbstractResourceType
+abstract class TagType extends AbstractResourceType
 {
-    /**
-     * @var string
-     */
-    private $name = ToroTaggingBundle::APPLICATION_NAME;
-
-    /**
-     * @var string
-     */
-    private $subject;
-
-    /**
-     * @param string $dataClass
-     * @param array $validationGroups
-     * @param string $subject
-     */
-    public function __construct($dataClass, array $validationGroups = [], $subject)
-    {
-        parent::__construct($dataClass, $validationGroups);
-
-        $this->subject = $subject;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -38,7 +15,7 @@ class TagType extends AbstractResourceType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => sprintf('%s.%s.form.tag.name', $this->name, $this->subject),
+                'label' => 'toro.form.tag',
             ])
         ;
     }
@@ -48,6 +25,6 @@ class TagType extends AbstractResourceType
      */
     public function getBlockPrefix()
     {
-        return sprintf('%s_%s_tag', $this->name, $this->subject);
+        return 'toro_tag';
     }
 }
