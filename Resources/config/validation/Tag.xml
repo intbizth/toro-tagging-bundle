@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                                        http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+
+    <class name="Toro\Bundle\TaggingBundle\Model\Tag">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">This value should not be blank.</option>
+                <option name="groups">
+                    <value>toro</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">3</option>
+                <option name="minMessage">This value is too short. It should have 3-20 characters.</option>
+                <option name="max">20</option>
+                <option name="maxMessage">This value is too long. It should have 3-20 characters.</option>
+                <option name="groups">toro</option>
+            </constraint>
+        </property>
+    </class>
+
+</constraint-mapping>
