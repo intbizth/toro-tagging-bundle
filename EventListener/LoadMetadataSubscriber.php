@@ -73,7 +73,7 @@ class LoadMetadataSubscriber implements EventSubscriber
      */
     private function createTagMapping($tagEntity, $subject, ClassMetadata $tagEntityMetadata)
     {
-        return [
+        $return = [
             'fieldName' => 'tags',
             'targetEntity' => $tagEntity,
             'joinTable' => [
@@ -94,5 +94,11 @@ class LoadMetadataSubscriber implements EventSubscriber
                 ]],
             ],
         ];
+
+        if (array_key_exists('tagables', $tagEntityMetadata->associationMappings)) {
+            $return['inversedBy'] = 'tagables';
+        }
+
+        return $return;
     }
 }
