@@ -2,6 +2,7 @@
 
 namespace Toro\Bundle\TaggingBundle\Form\Type;
 
+use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
 
 class TagChoiceLoader implements ChoiceLoaderInterface
