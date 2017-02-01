@@ -39,9 +39,10 @@ abstract class TagChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'choices' => function (Options $options) {
+            // away load new from data source
+            'choice_loader' => new TagChoiceLoader(function() {
                 return $this->repository->findAll();
-            },
+            }),
             'choice_value' => 'id',
             'choice_label' => 'name',
             'choice_translation_domain' => false,
